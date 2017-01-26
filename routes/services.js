@@ -5,12 +5,13 @@ var router = express.Router();
 router.get('/token', function(req, res, next) {
   res.cookie('token', new Date().getTime());
   res.end();
-  // res.cookie('token' , 'cookie_value').send({name: 'jaganlal'});
 });
 
 /* GET name page. */
 router.get('/name', function(req, res, next) {
-  res.send({name: 'jaganlal'});
+  setTimeout(function() {
+    res.status(200).send({name: 'jaganlal'});
+  }, (1000*(60*0.25)));
 });
 
 module.exports = router;
