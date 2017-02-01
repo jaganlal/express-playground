@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var services = require('./routes/services');
+var authroute = require('./routes/auth');
+var authservice = require('./services/auth');
+
 
 var app = express();
 
@@ -35,18 +38,24 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
     // // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization, X-Requested-With,content-type');
 
     // // Set to true if you need the website to include cookies in the requests sent
     // // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
-    next();
+    if ('OPTIONS' == req.method) {
+      res.sendStatus(203);
+    }
+    else {
+      // Pass to next layer of middleware
+      next();
+    }
 });
 
 app.use('/', index);
-app.use('/services', services);
+app.use('/authenticate', authroute);
+app.use('/services', authservice.authorize, services);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
