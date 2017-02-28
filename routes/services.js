@@ -11,7 +11,7 @@ router.get('/token', function(req, res, next) {
 router.get('/name', function(req, res, next) {
   setTimeout(function() {
     res.status(200).send({name: 'jaganlal'});
-  }, (1000*(60*0.25)));
+  }, 10);
 });
 
 module.exports = router;

@@ -42,10 +42,10 @@ app.use(function (req, res, next) {
 
     // // Set to true if you need the website to include cookies in the requests sent
     // // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
+    // res.setHeader('Access-Control-Allow-Credentials', true);
 
-    if ('OPTIONS' == req.method) {
-      res.sendStatus(203);
+    if ('OPTIONS' === req.method) {
+      res.sendStatus(200);
     }
     else {
       // Pass to next layer of middleware
