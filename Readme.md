@@ -1,0 +1,1 @@
+This project is scaffolded using 'express-generator'. For more details visit https://expressjs.com/en/starter/generator.html
