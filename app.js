@@ -6,11 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
 var services = require('./routes/services');
 var authroute = require('./routes/auth');
 var authservice = require('./services/auth');
 
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/db-playground');
+mongoose.connection.on('error', function (err) {
+  console.error(`MongoDB connection error: ${err}`);
+  process.exit(-1); 
+});
 
 var app = express();
 
@@ -56,7 +63,7 @@ app.use(function (req, res, next) {
 app.use('/', index);
 app.use('/authenticate', authroute);
 app.use('/services', authservice.authorize, services);
-app.use('/users', users);
+app.use('/users', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

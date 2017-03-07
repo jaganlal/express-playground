@@ -25,8 +25,7 @@ module.exports = {
 
   createToken: function(user) {
     var profile = {
-      id: 1, 
-      username: user.username
+      email: user.email
     };
     return jwt.sign(profile, secret, {
       expiresIn: 24 * 60 * 60
