@@ -17,7 +17,6 @@ var controller = {
     var newUser = User(req.body);
     return newUser.save()
       .then(function(user) {
-        console.log('User created successfully '+JSON.stringify(user));
         console.log('User Profile: '+JSON.stringify(user.profile));
         
         var token = auth.createToken(user);
@@ -50,14 +49,22 @@ var controller = {
         user.comparePassword(req.body.password, function(err, correctPassword) {
           if(err || !correctPassword) {
             console.log('Incorrect Password');
-            res.status(401).send('Incorrect Password');
+            return res.status(401).send('Incorrect Password');
           }
 
-          var token = auth.createToken(req.body);
+          console.log('User Profile: '+JSON.stringify(user.profile));
+
+          var token = auth.createToken(user.profile);
           return res.status(200).json({token});
         });
       })
       .catch(function(err) {console.log('user login err: '+err.message)})
+  },
+
+  me: function(req, res) {
+    console.log('User Profile from token: '+JSON.stringify(req.userprofile));
+
+    return res.status(200).send(req.userprofile);
   }
 }
 

@@ -13,7 +13,7 @@ module.exports = {
           console.error(err);
           return res.status(403).send('error authorizing token');
         } else {
-          req.token = decoded;
+          req.userprofile = decoded;
           return next();
         }
       });
@@ -24,10 +24,7 @@ module.exports = {
   }, 
 
   createToken: function(user) {
-    var profile = {
-      email: user.email
-    };
-    return jwt.sign(profile, secret, {
+    return jwt.sign(user, secret, {
       expiresIn: 24 * 60 * 60
     });
   }

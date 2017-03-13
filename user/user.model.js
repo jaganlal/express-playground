@@ -30,6 +30,7 @@ UserSchema
   .virtual('profile')
   .get(function() {
     return {
+      _id: this._id, 
       email: this.email, 
       role: this.role
     }
