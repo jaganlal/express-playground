@@ -26,6 +26,19 @@ var controller = {
       .catch(validationError(res));
   },
 
+  isexists: function(req, res, next) {
+    return User.findOne({email: req.body.email.toLowerCase()})
+              .exec()
+              .then(user => {
+                if(user) {
+                  return res.status(409).send('User already exists');
+                }
+
+                next();
+              })
+              .catch(function(err) {console.log('isexists err: '+err.message)})
+  },
+
   login: function(req, res, next) {
     User.findOne({email: req.body.email.toLowerCase()})
       .exec()
